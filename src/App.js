@@ -1,23 +1,29 @@
-import logo from './logo.svg';
+import { useState } from 'react/cjs/react.development';
 import './App.css';
+import CakeDecoration from './components/CakeDecoration';
+import CakeSize from './components/CakeSize'
 
 function App() {
+  const [size, setsize] = useState(6);
+  const [list, setList] = useState([0, 0, 0, 0]);//reusable
+  function toggleSize(num){
+    setsize(num);
+    setSizeOfItem(num);
+    setList([0, 0, 0, 0]);
+  }
+  const [sizeOfItem, setSizeOfItem] = useState(size);
+  const toggleSizeOfItem = (num, index, temp) => {
+    setSizeOfItem(sizeOfItem-num);
+    console.log(sizeOfItem, num, list);
+    let z = list;
+    z[index] = temp;
+    setList(z);
+  }
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div style={{display: "flex", alignItems: 'center', flexDirection: "column"}}>
+      <CakeSize toggleSize={toggleSize} />
+      <div style={{borderBottom: "3px solid orange", width: "100vw"}}></div>
+      <CakeDecoration size={size} sizeOfItem={sizeOfItem} toggleSizeOfItem={toggleSizeOfItem} list={list}/>
     </div>
   );
 }
